@@ -8,9 +8,9 @@ int main()
 {
 	float l = 10, h = 4, w = 5.2;
 	float S;
-	cout << "l (largo):" << l << "\ n";
-	cout << "h (alto):" << h << "\ n";
-	cout << "w (ancho):" << w << "\ n";
+	cout << "l (largo):" << l << "\n";
+	cout << "h (alto):" << h << "\n";
+	cout << "w (ancho):" << w << "\n";
 	S = l * h * w;
 	cout << "El area superficial es de:" << S << "m." << endl;
     return 0;
