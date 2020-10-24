@@ -4,14 +4,14 @@
 #include <iostream>
 using namespace std;
 
-int main () {
-
-      doble l = 10, h = 4, w = 5.2;
-			doble m;
-			cout << "l (largo):" << l << "\ n";
-			cout << "h (alto):" << h << "\ n";
-			cout << "w (ancho):" << w << "\ n";
-			S = l * h * w;
-			cout << "El area superficial es de:" << S << "m." << endl;
+int main () 
+{
+	float l = 10, h = 4, w = 5.2;
+	float m;
+	cout << "l (largo):" << l << "\ n";
+	cout << "h (alto):" << h << "\ n";
+	cout << "w (ancho):" << w << "\ n";
+	S = l * h * w;
+	cout << "El area superficial es de:" << S << "m." << endl;
     return 0;
 }
