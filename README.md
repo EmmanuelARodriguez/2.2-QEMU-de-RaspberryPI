@@ -1,3 +1,4 @@
+![logo](Imagenes/logoTEC.jpg)
 # 2.2-QEMU-de-RaspberryPI
 #    Tecnológico Nacional de México
 #   Instituto Tecnológico de Tijuana
