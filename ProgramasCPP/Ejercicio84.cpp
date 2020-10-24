@@ -5,12 +5,12 @@
 using namespace std;
 
 int main () {
-
-      doble x1 = 8, y1 = -4;
-			doble m = 3;
-			cout << "x1:" << x1 << "\ n";
-			cout << "y1:" << y1 << "\ n";
-			cout << "pendiente:" << m << "\ n";
-			cout << "La ecuación es:" << m << "X - Y +" << ((m * x1) + y1) << endl;
+	
+	float x1 = 8, y1 = -4;
+	float m = 3;
+	cout << "x1:" << x1 << "\n";
+	cout << "y1:" << y1 << "\n";
+	cout << "pendiente:" << m << "\n";
+	cout << "La ecuación es:" << m << "X - Y +" << ((m * x1) + y1) << endl;
     return 0;
 }
