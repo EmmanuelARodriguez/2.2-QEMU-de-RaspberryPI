@@ -4,10 +4,10 @@
 #include <iostream>
 using namespace std;
 
-int main () 
+int main() 
 {
 	float l = 10, h = 4, w = 5.2;
-	float m;
+	float S;
 	cout << "l (largo):" << l << "\ n";
 	cout << "h (alto):" << h << "\ n";
 	cout << "w (ancho):" << w << "\ n";
