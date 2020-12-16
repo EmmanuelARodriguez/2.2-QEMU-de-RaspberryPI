@@ -1,104 +1,145 @@
-.model small
-.stack 100
-.data
-dos equ 2 ; declaracion de constante=2
-m1 db 10,13,"Introduce la base: $"
-m2 db 10,13,"Introduce la altura: $"
-m3 db 10,13,10,13,"Area: $"
-m4 db 10,13,"Perimetro: $"
-m5 db "Area y perimetro de un rectangulo",10,13,'$'
-base db 0
-altura db 0
-unidades db 0
-decenas db 0
-.code
-.startup
-call cls
+PAGE 60,132
+TITLE Area de un trapecio
+INCLUDE 'EMU8086.INC'
+CR EQU 13
+LF EQU 10
 
-; imprime titulo
-mov ah,09h
-lea dx,m5
-int 21h
+;---------------------------------------------
+.MODEL SMALL
+.STACK 200 ;Se define la pila
+.DATA ;Se definen datos      
+       mensaje1 DB cr,lf,'Programa que calcula el area de un trapecio.$'
+       mensaje2 DB cr,lf,'Ingresa la base menor: (presiona enter)$'
+       mensaje3 DB cr,lf,'Ingresa la base mayor: (presiona enter)$'
+       mensaje4 DB cr,lf,'Presiona cualquier tecla para continuar$'
+       mensaje5 DB cr,lf,'Presiona 1 para calcular el area del trapecio o  presiona 0 para salir.$'
+       mensaje6 DB cr,lf,'Ingresa la altura: (presiona enter)$'
+       mensaje10 DB cr,lf,'El area del trapecio es:$'
+       salir DB cr,lf,'Saliendo del programa presione cualquier tecla..$'
 
-; imprime introduce la base
-lea dx,m1
-int 21h
+       f1 DW ?
+       f2 DW ?
+       f3 DW ?
+       f4 DW ?
 
-; pide la base
-mov ah,01h
-int 21h
-sub al,30h
-mov base,al
+       resultado DB cr,lf,'el area del triangulo es : $'
+       espa DB ' ',cr,lf,'$'
 
-; imprime introduce la altura
-mov ah,09h
-lea dx,m2
-int 21h
+       c  equ 02  
 
-; pide la altura
-mov ah,01h
-int 21h
-sub al,30h
-mov altura, al
+;----------------------------------------------------------------
+.CODE Area
+    DEFINE_SCAN_NUM
+    DEFINE_PRINT_NUM_UNS
+    jmp inicio
 
-;*********************** calcula area
-mov al,base
-mul altura ; multiplica: al * altura y el resultado queda en al
-aam
-mov decenas,ah
-mov unidades,al
+inicio:
+        MOV ax,Data
+        MOV DS,AX
 
-; imprime el area es
-mov ah,09h
-lea dx,m3
-int 21h
+        MOV AH,00H
+        MOV AL,03H
+        INT 10H
 
-call imprime2digitos
+        MOV AH,09H
+        LEA DX,mensaje1
+        INT 21H
 
-;******************** calcula perimetro
-mov al,dos
-mul base
-mov bl,al
+        LEA DX,espa
+        INT 21H
 
-mov al,dos
-mul altura
-mov cl,al
+        MOV AH,09H
+        LEA DX,mensaje5
+        INT 21H
 
-add bl,cl
-mov al,bl
-aam
-mov decenas,ah
-mov unidades,al
+        LEA DX,espa
+        INT 21H
 
-; imprime el perimetro es
-mov ah,09h
-lea dx,m4
-int 21h
+        MOV AH,01H
+        INT 21H
 
-call imprime2digitos
-.exit
+        SUB AL,30H
+        CMP AL,00H
+        JE fin
+        CMP AL,01H
+        JE multiplica
 
-cls proc near
-mov ah,00h
-mov al,03h
-int 10h
-ret
-endp
+multiplica:
 
-impcar proc near
-add dl,30h
-mov ah,02h
-int 21h
-ret
-endp
+        MOV AH,00H
+        MOV AL,03H
+        INT 10H
 
-imprime2digitos proc near
-; imprime decenas
-mov dl,decenas
-call impcar
-; imprime unidades
-mov dl,unidades
-call impcar
-ret
-endp
-end
+        MOV AH,09H
+        LEA DX,mensaje10
+        INT 21H  
+
+        LEA DX,espa
+        INT 21H
+
+        LEA DX,mensaje2
+        INT 21H
+
+        CALL SCAN_NUM
+
+        MOV f1,CX 
+
+        MOV AH,09H
+        LEA DX,mensaje3
+        INT 21H 
+
+        CALL SCAN_NUM
+
+        MOV f2,CX
+
+        MOV AH,09H
+        LEA DX,mensaje6
+        INT 21H 
+
+        CALL SCAN_NUM
+
+        MOV f3,CX
+
+        MOV AH,09H
+        LEA DX,resultado
+        INT 21H
+
+        MOV AX,F1
+        MOV BX,f2
+        ADD BX,F1
+        MOV BX,C
+        DIV BX ;MARCA ERROR AL QUERER DIVIDIR LA SUMA ENTRE LA CONSTANTE C QUE ES IGUAL A 2
+        MOV BX,f3
+        MUL BX
+
+        CALL PRINT_NUM_UNS
+
+        MOV AH,09H
+        LEA DX,espa
+        INT 21H
+
+        LEA DX,mensaje4
+        INT 21H
+
+        MOV AH,01h
+        INT 21H
+        JMP inicio
+
+fin:
+
+        MOV AH,09H
+        LEA DX,salir
+        INT 21H 
+
+        MOV AH,01h
+        INT 21H
+
+        MOV AH,01H
+        mov al,03H
+        INT 10H 
+
+        mov ax,4C00h
+        int 21h
+
+.EXIT
+END
